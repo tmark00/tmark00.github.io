@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Logowanie Tesla – skopiuj adres</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 42rem; margin: 3rem auto; padding: 0 1rem; line-height: 1.5; color: #222; background: #fff; }
+  @media (prefers-color-scheme: dark) { body { color: #ddd; background: #111; } textarea { background: #222; color: #ddd; } }
+  textarea { width: 100%; box-sizing: border-box; height: 7rem; font-family: ui-monospace, monospace; font-size: 0.85rem; padding: 0.5rem; }
+  button { font-size: 1rem; padding: 0.6rem 1.2rem; margin-top: 0.75rem; cursor: pointer; }
+  .ok { color: #1a7f37; margin-left: 0.75rem; }
+</style>
+</head>
+<body>
+<h1>Logowanie Tesla zakończone</h1>
+<p>Skopiuj cały poniższy adres i wklej go w TWCManagerze w polu logowania Tesla, potem kliknij <b>Save Token</b>.</p>
+<textarea id="url" readonly></textarea>
+<button id="copy" type="button">Kopiuj adres</button><span id="ok" class="ok"></span>
+<p><small>Kod w adresie jest jednorazowy i bez klucza zapisanego w TWCManagerze nikomu się nie przyda. Ta strona niczego nie wysyła.</small></p>
+<script>
+  var box = document.getElementById("url");
+  box.value = window.location.href;
+  document.getElementById("copy").addEventListener("click", function () {
+    box.select();
+    var done = function () { document.getElementById("ok").textContent = "Skopiowano"; };
+    if (navigator.clipboard) { navigator.clipboard.writeText(box.value).then(done, function () { document.execCommand("copy"); done(); }); }
+    else { document.execCommand("copy"); done(); }
+  });
+</script>
+</body>
+</html>
